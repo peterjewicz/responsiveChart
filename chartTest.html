@@ -1,0 +1,89 @@
+
+<body style="background-color: #929292;">
+<div class="canvasWrapper" style="width:320px; overflow:hidden;">
+       <canvas style="position:relative;" id="myChart" width="320" height="320"></canvas>
+</div>
+</body>
+<script src="Chart.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+valueArray = Array();
+labelArray = Array();
+
+labelArray.push(1);
+labelArray.push(2);
+labelArray.push(3);
+labelArray.push(4);
+labelArray.push(5);
+labelArray.push(6);
+labelArray.push(7);
+labelArray.push(8);
+labelArray.push(9);
+labelArray.push(10);
+
+valueArray.push(1);
+valueArray.push(4);
+valueArray.push(9);
+valueArray.push(16);
+valueArray.push(25);
+valueArray.push(36);
+valueArray.push(49);
+valueArray.push(64);
+valueArray.push(81);
+valueArray.push(100);
+
+
+(function(){
+
+	generateGraph();
+
+})();
+
+function updateSlider(val)
+{
+  var length = $('#myChart').width();
+  length = length - 320;
+
+  $('#myChart').css('right',  val);
+
+}
+function generateGraph()
+{
+
+
+	if(valueArray.length > 8 )
+	{
+		var size = valueArray.length - 8;
+		console.log(size);
+		var length = 320 + (size * 15);
+		console.log(length)
+		$('#myChart').css('width', length);
+		$('#myChart').css('height', '400px');
+
+		var slider = '<input type="range" min="0" max="' + size * 15 + '" value="0" id="fader" oninput="updateSlider(this.value)" >';
+		$('.canvasWrapper').append(slider);
+
+
+	}
+
+
+	var data = {
+	        labels:  labelArray,
+	        datasets: [
+	            {
+	                label: "My First dataset",
+	                fillColor: "rgba(220,220,220,0.2)",
+	                strokeColor: "rgba(255,255,255,1)",
+	                pointColor: "rgba(220,220,220,1)",
+	                pointStrokeColor: "#fff",
+	                pointHighlightFill: "#fff",
+	                pointHighlightStroke: "rgba(220,220,220,1)",
+	                data: valueArray
+	            }
+	        ]
+	    };
+	  var ctx = $("#myChart").get(0).getContext("2d");
+	  var myLineChart = new Chart(ctx).Line(data , { scaleFontColor: "#00000" });
+}
+</script>
